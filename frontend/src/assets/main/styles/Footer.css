@@ -1,0 +1,130 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+.footer {
+  background: linear-gradient(135deg, #be381a, #c44716);
+  color: #fff;
+  padding: 80px 0;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.2);
+}
+
+.footer a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.footer a:hover {
+  color: #fefefe;
+  transform: translateY(-3px);
+}
+
+.footer h5 {
+  margin-bottom: 25px;
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.footer h5::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 50px;
+  height: 2px;
+  background: #fff;
+}
+
+.footer .company-info p {
+  margin-bottom: 30px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer ul li {
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+}
+
+.footer hr {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  margin: 50px 0;
+}
+
+.footer .social a {
+  margin-right: 20px;
+  font-size: 1.2rem;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.footer .social a:hover {
+  transform: scale(1.1);
+}
+
+.footer .subscription-form .form-control {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #fff;
+  border-radius: 0;
+  padding: 12px 15px;
+  transition: background 0.3s ease;
+}
+
+.footer .subscription-form .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.footer .subscription-form .form-control:focus {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  box-shadow: none;
+}
+
+.footer .subscription-form .btn {
+  border-radius: 0;
+  padding: 12px 30px;
+  border: none;
+  background: #c0392b;
+  transition: background 0.3s ease, transform 0.3s ease;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.footer .subscription-form .btn:hover {
+  background: #e74c3c;
+  transform: translateY(-2px);
+}
+
+/* Animación de entrada para secciones */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.footer .fadeInUp {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+@media (max-width: 767.98px) {
+  .footer .text-md-right {
+    text-align: left !important;
+    margin-top: 20px;
+  }
+}

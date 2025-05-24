@@ -1,0 +1,170 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Contenedor principal */
+  .app-container {
+    background: #f7f7f7;
+    color: #333;
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  /* Cabecera con efecto espectacular */
+  .app-header {
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    color: #fff;
+    padding: 3rem 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  .app-header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://via.placeholder.com/1500') center/cover no-repeat;
+    opacity: 0.1;
+    z-index: -1;
+    animation: zoomIn 20s ease-in-out infinite;
+  }
+  
+  .app-title {
+    font-size: 4rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+  }
+  
+  /* Secciones generales */
+  .app-section {
+    padding: 4rem 0;
+    position: relative;
+    overflow: hidden;
+    transition: filter 0.3s ease;
+  }
+  
+  .app-section:hover {
+    filter: brightness(1.05);
+  }
+  
+  .app-section::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.05), transparent);
+    animation: rotateBG 30s linear infinite;
+    z-index: -1;
+  }
+  
+  /* Títulos y textos de sección */
+  .section-title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 0.5rem;
+  }
+  
+  .section-title::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 50%;
+    height: 4px;
+    background: linear-gradient(90deg, #ff416c, #ff4b2b);
+    border-radius: 2px;
+  }
+  
+  .section-text {
+    font-size: 1.25rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Tarjetas: Servicios y Contacto */
+  .card {
+    border: none;
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: #fff;
+  }
+  
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  }
+  
+  .service-card .card-body {
+    background: linear-gradient(135deg, #fff, #f0f0f0);
+    padding: 2rem;
+  }
+  
+  .contact-card .card-body {
+    padding: 2rem;
+  }
+  
+  .icon-wrapper {
+    margin-bottom: 1rem;
+  }
+  
+  .icon-circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+  }
+  
+  .icon-circle:hover {
+    transform: scale(1.1);
+  }
+  
+  /* Sección del mapa */
+  .mapa-section .ratio {
+    border: 5px solid #fff;
+    border-radius: 1rem;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Animaciones */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  @keyframes zoomIn {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+  
+  @keyframes rotateBG {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
