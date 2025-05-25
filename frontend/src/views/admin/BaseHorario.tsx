@@ -4,7 +4,6 @@
     ModalAgregar, 
     ModalEditar, 
     ModalEliminar,
-    ModalConfiguracion,
     ModalEliminarHorario 
   } from './components/modals/HorarioModals';
 
@@ -40,7 +39,6 @@
     const [showModalAgregar, setShowModalAgregar] = useState(false);
     const [showModalEditar, setShowModalEditar] = useState(false);
     const [showModalEliminar, setShowModalEliminar] = useState(false);
-    const [showModalConfiguracion, setShowModalConfiguracion] = useState(false);
     const [showModalEliminarHorario, setShowModalEliminarHorario] = useState(false);
     const [claseSeleccionada, setClaseSeleccionada] = useState<Clase | undefined>();
 
@@ -133,11 +131,6 @@
       setShowModalEliminarHorario(false);
     };
 
-    const handleSaveConfiguracion = () => {
-      // Aquí se manejaría la configuración guardada
-      setShowModalConfiguracion(false);
-    };
-
     return (
       <div className="bg-light min-vh-100">
         <Container className="py-5">
@@ -163,12 +156,6 @@
                 }}
               >
                 Agregar Clase
-              </Button>
-              <Button 
-                variant="outline-secondary" 
-                onClick={() => setShowModalConfiguracion(true)}
-              >
-                Configuración
               </Button>
               <Button 
                 variant="outline-danger" 
@@ -396,12 +383,6 @@
               />
             </>
           )}
-
-          <ModalConfiguracion
-            show={showModalConfiguracion}
-            onHide={() => setShowModalConfiguracion(false)}
-            onSave={handleSaveConfiguracion}
-          />
 
           <ModalEliminarHorario
             show={showModalEliminarHorario}

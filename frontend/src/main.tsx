@@ -10,6 +10,7 @@ import Footer from './views/main/components/Footer'
 import App from './views/main/Principal'
 import Login from './views/main/Login'
 import Register from './views/main/Register'
+import ForgotPassword from './views/main/ForgotPassword'
 import { NotFound } from './views/main/NotPages'
 import MainContent from './views/main/Portafolio'
 import Certificados from './views/main/Certificados'
@@ -35,6 +36,7 @@ const AppLayout = () => {
         {/* Rutas de Autenticación */}
         <Route path='/' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/forgot-password' element={<ForgotPassword />} />
         
         {/* Rutas Principales */}
         <Route path='/Principal' element={<App />} />

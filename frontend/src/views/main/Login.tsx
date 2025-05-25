@@ -126,7 +126,7 @@ const Login: React.FC = () => {
                   </div>
                 </div>
                 <div className="forgot-password">
-                  <a href="#">¿Olvidaste tu Contraseña?</a>
+                  <Link to="/forgot-password">¿Olvidaste tu Contraseña?</Link>
                 </div>
                 <button type="submit" className="login-button" disabled={loading}>
                   {loading ? 'Procesando...' : 'Iniciar Sesión'}

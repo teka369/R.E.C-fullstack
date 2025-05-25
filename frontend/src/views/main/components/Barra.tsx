@@ -91,16 +91,13 @@ const Sidebar: React.FC = () => {
                   </button>
                   <ul className={`submenu ${activeDropdown === 'academico' ? 'show' : ''}`}>
                     <li><a href="/Material" className="submenu-item"><i className="bi bi-file-earmark me-1"></i>Material</a></li>
-                    <li><a href="/MaterialEstu" className="submenu-item"><i className="bi bi-calendar me-1"></i>Material-Estu</a></li>
                     <li><a href="/Temarios" className="submenu-item"><i className="bi bi-card-list me-1"></i>Temarios</a></li>
-                    <li><a href="/Temariosestu" className="submenu-item"><i className="bi bi-card-list me-1"></i>Temarios-Estu</a></li>
                     <li><a href="/Horario" className="submenu-item"><i className="bi bi-calendar me-1"></i>Horario</a></li>
-                    <li><a href="/Horarioestu" className="submenu-item"><i className="bi bi-calendar me-1"></i>Horario-Estu</a></li>
                     
                   </ul>
                 </li>
                 
-                {/* Submenú para Observación y Seguimiento */}
+                {/* Submenú para Observación*/}
                 <li className="dropdown-nav">
                   <button 
                     className={`menu-item dropdown-toggle ${activeDropdown === 'evaluacion' ? 'active' : ''}`} 
@@ -110,8 +107,6 @@ const Sidebar: React.FC = () => {
                   </button>
                   <ul className={`submenu ${activeDropdown === 'evaluacion' ? 'show' : ''}`}>
                     <li><a href="/Observaciones" className="submenu-item"><i className="bi bi-search me-1"></i>Observación</a></li>
-                    <li><a href="/Observacionesestu" className="submenu-item"><i className="bi bi-search me-1"></i>Observación-Estu</a></li>
-                    
                   </ul>
                 </li>
               </>
@@ -126,7 +121,6 @@ const Sidebar: React.FC = () => {
                 <i className="bi bi-collection me-1"></i>Más<i className="bi bi-chevron-down ms-1"></i>
               </button>
               <ul className={`submenu ${activeDropdown === 'mas' ? 'show' : ''}`}>
-                <li><a href="/Sugerencias" className="submenu-item"><i className="bi bi-chat-dots me-1"></i>Sugerencias</a></li>
                 <li><a href="/Reportes" className="submenu-item"><i className="bi bi-file-earmark-text me-1"></i>Reportes</a></li>
                 <li><a href="/Portafolio" className="submenu-item"><i className="bi bi-folder me-1"></i>Portafolio</a></li>
                 <li><a href="/Certificados" className="submenu-item"><i className="bi bi-award me-1"></i>Certificados</a></li>
@@ -278,11 +272,6 @@ const Sidebar: React.FC = () => {
                       <i className="bi bi-search me-3"></i>Observación
                     </a>
                   </li>
-                  <li>
-                    <a href="/Seguimiento" className="menu-item">
-                      <i className="bi bi-graph-up me-3"></i>Seguimiento
-                    </a>
-                  </li>
                 </>
               )}
               
@@ -313,11 +302,6 @@ const Sidebar: React.FC = () => {
               </button>
               <div className={`accordion-content ${isAccordionOpen ? 'open' : ''}`}>
                 <ul>
-                  <li>
-                    <a href="/Sugerencias" className="menu-item">
-                      <i className="bi bi-chat-dots me-3"></i>Sugerencias
-                    </a>
-                  </li>
                   <li>
                     <a href="/Reportes" className="menu-item">
                       <i className="bi bi-file-earmark-text me-3"></i>Reportes

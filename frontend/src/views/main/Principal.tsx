@@ -76,13 +76,13 @@ const App = () => {
           <div className="text-center mb-3">
             <i className="bi bi-graph-up-arrow text-danger" style={{ fontSize: '3rem' }}></i>
           </div>
-          <h5 className="card-title text-center">Seguimiento Personalizado</h5>
+          <h5 className="card-title text-center">Observaciones Académicas</h5>
           <p className="card-text">
-            Visualiza tu progreso académico en tiempo real, identifica áreas de mejora y consolida tus fortalezas con nuestro sistema de seguimiento.
+            Visualiza y gestiona las observaciones académicas de los estudiantes, identificando áreas de mejora y fortalezas con nuestro sistema de seguimiento.
           </p>
         </div>
         <div className="card-footer bg-transparent border-0 text-center">
-          <Link to={isAuthenticated ? "/seguimiento" : "/"} className="btn btn-sm btn-outline-danger">
+          <Link to={isAuthenticated ? "/Observaciones" : "/"} className="btn btn-sm btn-outline-danger">
             {isAuthenticated ? "Ver Mi Progreso" : "Iniciar Sesión para Acceder"}
           </Link>
         </div>

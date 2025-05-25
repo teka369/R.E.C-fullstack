@@ -51,12 +51,6 @@ const Register: React.FC = () => {
       case 'estudiante':
         navigate('/PerfilEstudiante');
         break;
-      case 'padre':
-        navigate('/PerfilPadre');
-        break;
-      case 'administrativo':
-        navigate('/PerfilAdministrativo');
-        break;
       default:
         navigate('/');
     }
@@ -235,8 +229,6 @@ const Register: React.FC = () => {
                   >
                     <option value="estudiante">Estudiante</option>
                     <option value="profesor">Profesor</option>
-                    <option value="padre">Padre de Familia</option>
-                    <option value="administrativo">Personal Administrativo</option>
                   </select>
                 </div>
                 {regRol === 'profesor' && (

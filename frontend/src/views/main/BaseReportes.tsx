@@ -1,55 +1,9 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Button, Form } from 'react-bootstrap';
-import { FaDownload, FaPrint, FaPlus, FaEdit, FaSave } from 'react-icons/fa';
-import { useReporteModals, Reporte } from './components/modals/ReportesModals';
+import { FaEdit, FaSave, FaChartLine, FaUserGraduate, FaCalendarCheck } from 'react-icons/fa';
 
 const Reportes: React.FC = () => {
-  const [periodoSeleccionado, setPeriodoSeleccionado] = useState('2024-1');
-  const [cursoSeleccionado, setCursoSeleccionado] = useState('Todos');
-  const [tipoReporteSeleccionado, setTipoReporteSeleccionado] = useState('Todos');
   const [isEditing, setIsEditing] = useState(false);
-  const [reportes, setReportes] = useState<Reporte[]>([
-    {
-      id: 1,
-      titulo: 'Reporte de Rendimiento Académico',
-      tipo: 'academico',
-      periodo: '2024-1',
-      curso: '11°A',
-      fecha: '15/03/2024',
-      descripcion: 'Análisis detallado del rendimiento académico del curso 11°A en el primer periodo de 2024.',
-      estado: 'generado',
-      formato: 'pdf'
-    },
-    {
-      id: 2,
-      titulo: 'Reporte de Asistencia',
-      tipo: 'asistencia',
-      periodo: '2024-1',
-      curso: '10°B',
-      fecha: '14/03/2024',
-      descripcion: 'Estadísticas de asistencia y ausencias del curso 10°B en el primer periodo de 2024.',
-      estado: 'pendiente',
-      formato: 'excel'
-    },
-    {
-      id: 3,
-      titulo: 'Reporte de Comportamiento',
-      tipo: 'comportamiento',
-      periodo: '2024-1',
-      curso: '9°A',
-      fecha: '13/03/2024',
-      descripcion: 'Evaluación del comportamiento y disciplina del curso 9°A en el primer periodo de 2024.',
-      estado: 'archivado',
-      formato: 'pdf'
-    }
-  ]);
-  
-  const { 
-    modals, 
-    handleViewReporte: mostrarVer, 
-    handleEditReporte: mostrarEditar, 
-    handleDeleteReporte: mostrarEliminar 
-  } = useReporteModals();
 
   // Datos para las estadísticas de resumen
   const [estadisticas, setEstadisticas] = useState({
@@ -76,110 +30,46 @@ const Reportes: React.FC = () => {
     }));
   };
 
-  const handleSaveReporte = (reporte: Reporte) => {
-    if (reporte.id) {
-      setReportes(prev => prev.map(r => 
-        r.id === reporte.id ? reporte : r
-      ));
-    } else {
-      setReportes(prev => [...prev, reporte]);
-    }
-  };
-
-  const handleDeleteReporte = (reporte: Reporte) => {
-    setReportes(prev => prev.filter(r => r.id !== reporte.id));
-  };
-
   return (
     <div className="bg-light min-vh-100">
       <Container className="py-5">
         <div className="d-flex justify-content-between align-items-center mb-4">
-          <h2 className="mb-0">Reportes y Estadísticas</h2>
+          <div>
+            <h2 className="mb-1 text-primary">Reportes y Estadísticas</h2>
+            <p className="text-muted mb-0">Análisis detallado del rendimiento académico</p>
+          </div>
           <div className="d-flex gap-2">
             <Button 
               variant={isEditing ? "success" : "primary"}
               onClick={() => setIsEditing(!isEditing)}
+              className="d-flex align-items-center gap-2 px-4"
             >
               {isEditing ? (
                 <>
-                  <FaSave className="me-1" /> Guardar Cambios
+                  <FaSave /> Guardar Cambios
                 </>
               ) : (
                 <>
-                  <FaEdit className="me-1" /> Editar Estadísticas
+                  <FaEdit /> Editar Estadísticas
                 </>
               )}
             </Button>
           </div>
         </div>
 
-        {/* Filtros */}
-        <Card className="border-0 shadow-sm mb-4">
-          <Card.Body>
-            <Row className="g-3">
-              <Col md={4}>
-                <Form.Group>
-                  <Form.Label>Periodo Académico</Form.Label>
-                  <Form.Select 
-                    value={periodoSeleccionado}
-                    onChange={(e) => setPeriodoSeleccionado(e.target.value)}
-                  >
-                    <option value="Todos">Todos los periodos</option>
-                    <option value="2024-1">2024 - Primer Periodo</option>
-                    <option value="2023-4">2023 - Cuarto Periodo</option>
-                    <option value="2023-3">2023 - Tercer Periodo</option>
-                    <option value="2023-2">2023 - Segundo Periodo</option>
-                    <option value="2023-1">2023 - Primer Periodo</option>
-                  </Form.Select>
-                </Form.Group>
-              </Col>
-              <Col md={4}>
-                <Form.Group>
-                  <Form.Label>Curso</Form.Label>
-                  <Form.Select 
-                    value={cursoSeleccionado}
-                    onChange={(e) => setCursoSeleccionado(e.target.value)}
-                  >
-                    <option value="Todos">Todos los cursos</option>
-                    <option value="11A">11°A</option>
-                    <option value="11B">11°B</option>
-                    <option value="10A">10°A</option>
-                    <option value="10B">10°B</option>
-                    <option value="9A">9°A</option>
-                    <option value="9B">9°B</option>
-                    <option value="8A">8°A</option>
-                    <option value="8B">8°B</option>
-                  </Form.Select>
-                </Form.Group>
-              </Col>
-              <Col md={4}>
-                <Form.Group>
-                  <Form.Label>Tipo de Reporte</Form.Label>
-                  <Form.Select 
-                    value={tipoReporteSeleccionado}
-                    onChange={(e) => setTipoReporteSeleccionado(e.target.value)}
-                  >
-                    <option value="Todos">Todos los tipos</option>
-                    <option value="academico">Académico</option>
-                    <option value="asistencia">Asistencia</option>
-                    <option value="comportamiento">Comportamiento</option>
-                    <option value="evaluacion">Evaluación</option>
-                  </Form.Select>
-                </Form.Group>
-              </Col>
-            </Row>
-          </Card.Body>
-        </Card>
-
-        {/* Tarjetas de estadísticas */}
         <Row className="g-4 mb-4">
           <Col md={4}>
-            <Card className="border-0 shadow-sm h-100">
-              <Card.Body>
-                <h5 className="mb-3">Rendimiento Académico</h5>
-                <div className="d-flex flex-column">
-                  <div className="d-flex justify-content-between mb-2">
-                    <span>Promedio General:</span>
+            <Card className="border-0 shadow-sm h-100 hover-card">
+              <Card.Body className="p-4">
+                <div className="d-flex align-items-center mb-4">
+                  <div className="icon-circle bg-primary bg-opacity-10 me-3">
+                    <FaUserGraduate className="text-primary" size={20} />
+                  </div>
+                  <h5 className="mb-0">Rendimiento Académico</h5>
+                </div>
+                <div className="d-flex flex-column gap-3">
+                  <div className="stat-item">
+                    <span className="text-muted">Promedio General</span>
                     {isEditing ? (
                       <Form.Control
                         type="number"
@@ -188,14 +78,14 @@ const Reportes: React.FC = () => {
                         max="5"
                         value={estadisticas.promedioGeneral}
                         onChange={(e) => handleEstadisticaChange('promedioGeneral', parseFloat(e.target.value))}
-                        style={{ width: '80px' }}
+                        className="stat-input"
                       />
                     ) : (
-                      <span className="fw-bold">{estadisticas.promedioGeneral.toFixed(1)}</span>
+                      <span className="stat-value">{estadisticas.promedioGeneral.toFixed(1)}</span>
                     )}
                   </div>
-                  <div className="d-flex justify-content-between mb-2">
-                    <span>Porcentaje de Aprobación:</span>
+                  <div className="stat-item">
+                    <span className="text-muted">Porcentaje de Aprobación</span>
                     {isEditing ? (
                       <Form.Control
                         type="number"
@@ -203,36 +93,36 @@ const Reportes: React.FC = () => {
                         max="100"
                         value={estadisticas.aprobacion}
                         onChange={(e) => handleEstadisticaChange('aprobacion', parseInt(e.target.value))}
-                        style={{ width: '80px' }}
+                        className="stat-input"
                       />
                     ) : (
-                      <span className="fw-bold">{estadisticas.aprobacion}%</span>
+                      <span className="stat-value">{estadisticas.aprobacion}%</span>
                     )}
                   </div>
-                  <div className="d-flex justify-content-between mb-2">
-                    <span>Mejor Curso:</span>
+                  <div className="stat-item">
+                    <span className="text-muted">Mejor Curso</span>
                     {isEditing ? (
                       <Form.Control
                         type="text"
                         value={estadisticas.mejorCurso}
                         onChange={(e) => handleEstadisticaChange('mejorCurso', e.target.value)}
-                        style={{ width: '80px' }}
+                        className="stat-input"
                       />
                     ) : (
-                      <span className="fw-bold">{estadisticas.mejorCurso}</span>
+                      <span className="stat-value">{estadisticas.mejorCurso}</span>
                     )}
                   </div>
-                  <div className="d-flex justify-content-between">
-                    <span>Mejor Asignatura:</span>
+                  <div className="stat-item">
+                    <span className="text-muted">Mejor Asignatura</span>
                     {isEditing ? (
                       <Form.Control
                         type="text"
                         value={estadisticas.mejorAsignatura}
                         onChange={(e) => handleEstadisticaChange('mejorAsignatura', e.target.value)}
-                        style={{ width: '80px' }}
+                        className="stat-input"
                       />
                     ) : (
-                      <span className="fw-bold">{estadisticas.mejorAsignatura}</span>
+                      <span className="stat-value">{estadisticas.mejorAsignatura}</span>
                     )}
                   </div>
                 </div>
@@ -240,12 +130,17 @@ const Reportes: React.FC = () => {
             </Card>
           </Col>
           <Col md={4}>
-            <Card className="border-0 shadow-sm h-100">
-              <Card.Body>
-                <h5 className="mb-3">Asistencia</h5>
-                <div className="d-flex flex-column">
-                  <div className="d-flex justify-content-between mb-2">
-                    <span>Asistencia Promedio:</span>
+            <Card className="border-0 shadow-sm h-100 hover-card">
+              <Card.Body className="p-4">
+                <div className="d-flex align-items-center mb-4">
+                  <div className="icon-circle bg-success bg-opacity-10 me-3">
+                    <FaCalendarCheck className="text-success" size={20} />
+                  </div>
+                  <h5 className="mb-0">Asistencia</h5>
+                </div>
+                <div className="d-flex flex-column gap-3">
+                  <div className="stat-item">
+                    <span className="text-muted">Asistencia Promedio</span>
                     {isEditing ? (
                       <Form.Control
                         type="number"
@@ -253,14 +148,14 @@ const Reportes: React.FC = () => {
                         max="100"
                         value={estadisticas.asistenciaPromedio}
                         onChange={(e) => handleEstadisticaChange('asistenciaPromedio', parseInt(e.target.value))}
-                        style={{ width: '80px' }}
+                        className="stat-input"
                       />
                     ) : (
-                      <span className="fw-bold">{estadisticas.asistenciaPromedio}%</span>
+                      <span className="stat-value">{estadisticas.asistenciaPromedio}%</span>
                     )}
                   </div>
-                  <div className="d-flex justify-content-between mb-2">
-                    <span>Inasistencias Justificadas:</span>
+                  <div className="stat-item">
+                    <span className="text-muted">Inasistencias Justificadas</span>
                     {isEditing ? (
                       <Form.Control
                         type="number"
@@ -268,14 +163,14 @@ const Reportes: React.FC = () => {
                         max="100"
                         value={estadisticas.inasistenciasJustificadas}
                         onChange={(e) => handleEstadisticaChange('inasistenciasJustificadas', parseInt(e.target.value))}
-                        style={{ width: '80px' }}
+                        className="stat-input"
                       />
                     ) : (
-                      <span className="fw-bold">{estadisticas.inasistenciasJustificadas}%</span>
+                      <span className="stat-value">{estadisticas.inasistenciasJustificadas}%</span>
                     )}
                   </div>
-                  <div className="d-flex justify-content-between mb-2">
-                    <span>Inasistencias Injustificadas:</span>
+                  <div className="stat-item">
+                    <span className="text-muted">Inasistencias Injustificadas</span>
                     {isEditing ? (
                       <Form.Control
                         type="number"
@@ -283,21 +178,21 @@ const Reportes: React.FC = () => {
                         max="100"
                         value={estadisticas.inasistenciasInjustificadas}
                         onChange={(e) => handleEstadisticaChange('inasistenciasInjustificadas', parseInt(e.target.value))}
-                        style={{ width: '80px' }}
+                        className="stat-input"
                       />
                     ) : (
-                      <span className="fw-bold">{estadisticas.inasistenciasInjustificadas}%</span>
+                      <span className="stat-value">{estadisticas.inasistenciasInjustificadas}%</span>
                     )}
                   </div>
-                  <div className="d-flex justify-content-between">
-                    <span>Curso con Mayor Asistencia:</span>
+                  <div className="stat-item">
+                    <span className="text-muted">Curso con Mayor Asistencia</span>
                     {isEditing ? (
                       <div className="d-flex gap-2">
                         <Form.Control
                           type="text"
                           value={estadisticas.cursoMayorAsistencia}
                           onChange={(e) => handleEstadisticaChange('cursoMayorAsistencia', e.target.value)}
-                          style={{ width: '60px' }}
+                          className="stat-input"
                         />
                         <Form.Control
                           type="number"
@@ -305,11 +200,11 @@ const Reportes: React.FC = () => {
                           max="100"
                           value={estadisticas.porcentajeCursoMayorAsistencia}
                           onChange={(e) => handleEstadisticaChange('porcentajeCursoMayorAsistencia', parseInt(e.target.value))}
-                          style={{ width: '60px' }}
+                          className="stat-input"
                         />
                       </div>
                     ) : (
-                      <span className="fw-bold">{estadisticas.cursoMayorAsistencia} ({estadisticas.porcentajeCursoMayorAsistencia}%)</span>
+                      <span className="stat-value">{estadisticas.cursoMayorAsistencia} ({estadisticas.porcentajeCursoMayorAsistencia}%)</span>
                     )}
                   </div>
                 </div>
@@ -317,64 +212,69 @@ const Reportes: React.FC = () => {
             </Card>
           </Col>
           <Col md={4}>
-            <Card className="border-0 shadow-sm h-100">
-              <Card.Body>
-                <h5 className="mb-3">Comparativo con Periodo Anterior</h5>
-                <div className="d-flex flex-column">
-                  <div className="d-flex justify-content-between mb-2">
-                    <span>Variación en Promedio:</span>
+            <Card className="border-0 shadow-sm h-100 hover-card">
+              <Card.Body className="p-4">
+                <div className="d-flex align-items-center mb-4">
+                  <div className="icon-circle bg-info bg-opacity-10 me-3">
+                    <FaChartLine className="text-info" size={20} />
+                  </div>
+                  <h5 className="mb-0">Comparativo con Periodo Anterior</h5>
+                </div>
+                <div className="d-flex flex-column gap-3">
+                  <div className="stat-item">
+                    <span className="text-muted">Variación en Promedio</span>
                     {isEditing ? (
                       <Form.Control
                         type="number"
                         step="0.1"
                         value={estadisticas.variacionPromedio}
                         onChange={(e) => handleEstadisticaChange('variacionPromedio', parseFloat(e.target.value))}
-                        style={{ width: '80px' }}
+                        className="stat-input"
                       />
                     ) : (
-                      <span className="fw-bold text-success">+{estadisticas.variacionPromedio}</span>
+                      <span className="stat-value text-success">+{estadisticas.variacionPromedio}</span>
                     )}
                   </div>
-                  <div className="d-flex justify-content-between mb-2">
-                    <span>Variación en Aprobación:</span>
+                  <div className="stat-item">
+                    <span className="text-muted">Variación en Aprobación</span>
                     {isEditing ? (
                       <Form.Control
                         type="number"
                         value={estadisticas.variacionAprobacion}
                         onChange={(e) => handleEstadisticaChange('variacionAprobacion', parseInt(e.target.value))}
-                        style={{ width: '80px' }}
+                        className="stat-input"
                       />
                     ) : (
-                      <span className="fw-bold text-success">+{estadisticas.variacionAprobacion}%</span>
+                      <span className="stat-value text-success">+{estadisticas.variacionAprobacion}%</span>
                     )}
                   </div>
-                  <div className="d-flex justify-content-between mb-2">
-                    <span>Reducción de Ausencias:</span>
+                  <div className="stat-item">
+                    <span className="text-muted">Reducción de Ausencias</span>
                     {isEditing ? (
                       <Form.Control
                         type="number"
                         value={estadisticas.reduccionAusencias}
                         onChange={(e) => handleEstadisticaChange('reduccionAusencias', parseInt(e.target.value))}
-                        style={{ width: '80px' }}
+                        className="stat-input"
                       />
                     ) : (
-                      <span className="fw-bold text-success">-{estadisticas.reduccionAusencias}%</span>
+                      <span className="stat-value text-success">-{estadisticas.reduccionAusencias}%</span>
                     )}
                   </div>
-                  <div className="d-flex justify-content-between">
-                    <span>Tendencia General:</span>
+                  <div className="stat-item">
+                    <span className="text-muted">Tendencia General</span>
                     {isEditing ? (
                       <Form.Select
                         value={estadisticas.tendenciaGeneral}
                         onChange={(e) => handleEstadisticaChange('tendenciaGeneral', e.target.value)}
-                        style={{ width: '120px' }}
+                        className="stat-input"
                       >
                         <option value="Positiva">Positiva</option>
                         <option value="Negativa">Negativa</option>
                         <option value="Estabilizada">Estabilizada</option>
                       </Form.Select>
                     ) : (
-                      <span className="fw-bold text-success">{estadisticas.tendenciaGeneral}</span>
+                      <span className="stat-value text-success">{estadisticas.tendenciaGeneral}</span>
                     )}
                   </div>
                 </div>
@@ -382,56 +282,42 @@ const Reportes: React.FC = () => {
             </Card>
           </Col>
         </Row>
-
-        {/* Lista de Reportes */}
-        <Card className="border-0 shadow-sm mt-4">
-          <Card.Body>
-            <h5 className="mb-3">Reportes Generados</h5>
-            <div className="table-responsive">
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>Título</th>
-                    <th>Tipo</th>
-                    <th>Curso</th>
-                    <th>Fecha</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {reportes.map(reporte => (
-                    <tr key={reporte.id}>
-                      <td>{reporte.titulo}</td>
-                      <td>{reporte.tipo}</td>
-                      <td>{reporte.curso}</td>
-                      <td>{reporte.fecha}</td>
-                      <td>{reporte.estado}</td>
-                      <td>
-                        <Button variant="outline-primary" size="sm" className="me-2" onClick={() => mostrarVer(reporte)}>
-                          <FaDownload />
-                        </Button>
-                        <Button variant="outline-secondary" size="sm" className="me-2" onClick={() => window.print()}>
-                          <FaPrint />
-                        </Button>
-                        <Button variant="outline-danger" size="sm" className="me-2" onClick={() => mostrarEditar(reporte, handleSaveReporte)}>
-                          <FaEdit />
-                        </Button>
-                        <Button variant="outline-danger" size="sm" onClick={() => mostrarEliminar(reporte, handleDeleteReporte)}>
-                          <FaPlus />
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </Card.Body>
-        </Card>
-
-        {/* Renderizar modales */}
-        {modals}
       </Container>
+
+      <style jsx>{`
+        .hover-card {
+          transition: transform 0.2s ease-in-out;
+        }
+        .hover-card:hover {
+          transform: translateY(-5px);
+        }
+        .icon-circle {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .stat-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 8px 0;
+          border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .stat-item:last-child {
+          border-bottom: none;
+        }
+        .stat-value {
+          font-weight: 600;
+          font-size: 1.1rem;
+        }
+        .stat-input {
+          width: 100px;
+          text-align: right;
+        }
+      `}</style>
     </div>
   );
 };
