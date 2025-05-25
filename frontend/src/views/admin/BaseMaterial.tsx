@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button, Badge, Form, InputGroup, Nav } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import { FaSearch, FaFilter, FaBook, FaVideo, FaFilePdf, FaFileAlt, FaDownload, FaEye, FaPlus, FaEdit, FaTrash, FaInfoCircle } from 'react-icons/fa';
 import { VerMaterialModal, EditarMaterialModal, EliminarMaterialModal } from './components/modals/MaterialModals';
 
@@ -46,9 +45,6 @@ const Material: React.FC = () => {
     enlace: ''
   };
   
-  // Estado para el formulario (tanto para agregar como editar)
-  const [formData, setFormData] = useState<Material>(emptyMaterial);
-
   // Materiales (sin datos de ejemplo)
   const [materiales, setMateriales] = useState<Material[]>([]);
 
@@ -114,14 +110,13 @@ const Material: React.FC = () => {
 
   // Funciones para manejar los modales
   const handleAddModal = () => {
-    setFormData(emptyMaterial);
+    setCurrentMaterial(emptyMaterial);
     setShowAddModal(true);
   };
 
   const handleEditModal = (material: Material) => {
     console.log("Editando material:", material);
     setCurrentMaterial(material);
-    setFormData({...material});
     setShowEditModal(true);
   };
 
@@ -135,16 +130,6 @@ const Material: React.FC = () => {
     console.log("Viendo detalles del material:", material);
     setCurrentMaterial(material);
     setShowDetailsModal(true);
-  };
-
-  // Funciones para manejar cambios en el formulario
-  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    console.log(`Campo cambiado: ${name} = ${value}`);
-    setFormData(prevData => ({
-      ...prevData,
-      [name]: value
-    }));
   };
 
   // Función para eliminar un material

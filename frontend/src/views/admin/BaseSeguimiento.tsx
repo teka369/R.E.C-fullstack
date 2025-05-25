@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Button, Form, Table, Badge, ProgressBar, Tabs, Tab, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { FaSearch, FaUserGraduate, FaChartLine, FaClipboardCheck, FaExclamationTriangle, FaCalendarAlt, FaComments, FaFileAlt, FaEdit, FaEye } from 'react-icons/fa';
+import { FaSearch, FaUserGraduate, FaChartLine, FaExclamationTriangle, FaCalendarAlt, FaComments, FaFileAlt, FaEdit, FaEye } from 'react-icons/fa';
 
 interface Estudiante {
   id: number;

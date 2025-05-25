@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Button, Badge, Form, InputGroup, Table } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Container, Row, Col, Button, Badge, Form, InputGroup, Table } from 'react-bootstrap';
 import { FaSearch, FaFilter, FaPlus } from 'react-icons/fa';
 import { useObservacionModals } from './components/modals/ObservacionesModals';
 

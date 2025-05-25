@@ -74,6 +74,9 @@ const Register: React.FC = () => {
       // Guardar datos del usuario en localStorage
       localStorage.setItem('userId', '12345');
       localStorage.setItem('userRol', regRol);
+      if (regRol === 'profesor') {
+        localStorage.setItem('userGrados', JSON.stringify(regGradosProfesor));
+      }
       // Redirigir según el rol
       redirectBasedOnRole(regRol);
     } catch (error: any) {

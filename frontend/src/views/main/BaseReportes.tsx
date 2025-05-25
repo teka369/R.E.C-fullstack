@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Button, Form } from 'react-bootstrap';
-import { FaDownload, FaPrint, FaFileExport, FaPlus, FaEdit, FaSave } from 'react-icons/fa';
+import { FaDownload, FaPrint, FaPlus, FaEdit, FaSave } from 'react-icons/fa';
 import { useReporteModals, Reporte } from './components/modals/ReportesModals';
 
 const Reportes: React.FC = () => {
@@ -382,6 +382,52 @@ const Reportes: React.FC = () => {
             </Card>
           </Col>
         </Row>
+
+        {/* Lista de Reportes */}
+        <Card className="border-0 shadow-sm mt-4">
+          <Card.Body>
+            <h5 className="mb-3">Reportes Generados</h5>
+            <div className="table-responsive">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Título</th>
+                    <th>Tipo</th>
+                    <th>Curso</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {reportes.map(reporte => (
+                    <tr key={reporte.id}>
+                      <td>{reporte.titulo}</td>
+                      <td>{reporte.tipo}</td>
+                      <td>{reporte.curso}</td>
+                      <td>{reporte.fecha}</td>
+                      <td>{reporte.estado}</td>
+                      <td>
+                        <Button variant="outline-primary" size="sm" className="me-2" onClick={() => mostrarVer(reporte)}>
+                          <FaDownload />
+                        </Button>
+                        <Button variant="outline-secondary" size="sm" className="me-2" onClick={() => window.print()}>
+                          <FaPrint />
+                        </Button>
+                        <Button variant="outline-danger" size="sm" className="me-2" onClick={() => mostrarEditar(reporte, handleSaveReporte)}>
+                          <FaEdit />
+                        </Button>
+                        <Button variant="outline-danger" size="sm" onClick={() => mostrarEliminar(reporte, handleDeleteReporte)}>
+                          <FaPlus />
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Card.Body>
+        </Card>
 
         {/* Renderizar modales */}
         {modals}

@@ -1,5 +1,5 @@
-import { Card, Button, Carousel, Container, Row, Col, Badge } from 'react-bootstrap';
-import { Github, Globe, Whatsapp } from 'react-bootstrap-icons';
+import { Card, Button, Container, Row, Col, Badge } from 'react-bootstrap';
+import { Github } from 'react-bootstrap-icons';
 import { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../assets/main/styles/Portafolio.css';

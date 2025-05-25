@@ -17,11 +17,6 @@ const Login: React.FC = () => {
   const [showMessage, setShowMessage] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Función para establecer la autenticación
-  const setAuthentication = () => {
-    localStorage.setItem('userAuthenticated', 'true');
-  };
-
   // Función para redireccionar según rol
   const redirectBasedOnRole = (rol: string) => {
     switch (rol) {
@@ -65,7 +60,7 @@ const Login: React.FC = () => {
     localStorage.setItem('userAuthenticated', 'true');
     setShowMessage(true);
     setLoading(false);
-    setTimeout(() => navigate('/Principal'), 1200);
+    setTimeout(() => redirectBasedOnRole('admin'), 1200);
   };
 
   return (

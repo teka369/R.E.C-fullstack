@@ -1,6 +1,5 @@
   import React, { useState } from 'react';
-  import { Container, Table, Card, Badge, Button, Row, Col, ButtonGroup, Dropdown, Form } from 'react-bootstrap';
-  import { Link } from 'react-router-dom';
+  import { Container, Table, Card, Badge, Button, Row, Col, Form } from 'react-bootstrap';
   import { 
     ModalAgregar, 
     ModalEditar, 
@@ -41,6 +40,8 @@
     const [showModalAgregar, setShowModalAgregar] = useState(false);
     const [showModalEditar, setShowModalEditar] = useState(false);
     const [showModalEliminar, setShowModalEliminar] = useState(false);
+    const [showModalConfiguracion, setShowModalConfiguracion] = useState(false);
+    const [showModalEliminarHorario, setShowModalEliminarHorario] = useState(false);
     const [claseSeleccionada, setClaseSeleccionada] = useState<Clase | undefined>();
 
     // Horas de clase
@@ -127,6 +128,16 @@
       setNotasImportantes(notasImportantes.filter(nota => nota.id !== id));
     };
 
+    const handleEliminarHorario = () => {
+      setClases([]);
+      setShowModalEliminarHorario(false);
+    };
+
+    const handleSaveConfiguracion = () => {
+      // Aquí se manejaría la configuración guardada
+      setShowModalConfiguracion(false);
+    };
+
     return (
       <div className="bg-light min-vh-100">
         <Container className="py-5">
@@ -152,6 +163,18 @@
                 }}
               >
                 Agregar Clase
+              </Button>
+              <Button 
+                variant="outline-secondary" 
+                onClick={() => setShowModalConfiguracion(true)}
+              >
+                Configuración
+              </Button>
+              <Button 
+                variant="outline-danger" 
+                onClick={() => setShowModalEliminarHorario(true)}
+              >
+                Eliminar Horario
               </Button>
             </div>
           </div>
@@ -373,6 +396,18 @@
               />
             </>
           )}
+
+          <ModalConfiguracion
+            show={showModalConfiguracion}
+            onHide={() => setShowModalConfiguracion(false)}
+            onSave={handleSaveConfiguracion}
+          />
+
+          <ModalEliminarHorario
+            show={showModalEliminarHorario}
+            onHide={() => setShowModalEliminarHorario(false)}
+            onConfirm={handleEliminarHorario}
+          />
         </Container>
       </div>
     );
