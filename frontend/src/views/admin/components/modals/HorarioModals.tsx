@@ -186,10 +186,13 @@ export const ModalAgregar: React.FC<ModalClaseProps> = ({ show, onHide, onSave, 
                     disabled={clase?.hora !== undefined}
                   >
                     <option value="">Seleccionar horario</option>
-                    <option value="7:00 - 8:30">7:00 - 8:30</option>
-                    <option value="8:30 - 10:00">8:30 - 10:00</option>
-                    <option value="10:30 - 12:00">10:30 - 12:00</option>
-                    <option value="12:00 - 13:30">12:00 - 13:30</option>
+                    <option value="6:00 - 6:50">6:00 - 6:50</option>
+                    <option value="6:50 - 7:40">6:50 - 7:40</option>
+                    <option value="7:40 - 8:30">7:40 - 8:30</option>
+                    <option value="8:30 - 9:20">8:30 - 9:20</option>
+                    <option value="9:20 - 10:10">9:20 - 10:10</option>
+                    <option value="10:10 - 11:00">10:10 - 11:00</option>
+                    <option value="11:00 - 11:50">11:00 - 11:50</option>
                   </Form.Select>
                 </Form.Group>
               </div>
