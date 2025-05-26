@@ -21,7 +21,7 @@ const Login: React.FC = () => {
   const redirectBasedOnRole = (rol: string) => {
     switch (rol) {
       case 'admin':
-        navigate('/');
+        navigate('/Principal');
         break;
       case 'profesor':
         navigate('/PerfilProfesor');
@@ -36,25 +36,6 @@ const Login: React.FC = () => {
   const handleLoginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    // try {
-    //   const res = await api.post('/login', {
-    //     email: loginUsername,
-    //     password: loginPassword,
-    //   });
-    //   setMessage(res.data.message);
-    //   setMessageType('success');
-    //   setAuthentication();
-    //   // Guardar el nombre y rol del usuario en localStorage
-    //   localStorage.setItem('userName', res.data.user.nombre);
-    //   localStorage.setItem('userRole', res.data.user.rol);
-    //   setTimeout(() => redirectBasedOnRole(res.data.user.rol), 1500);
-    // } catch (err: any) {
-    //   setMessage(err.response?.data?.message || 'Error de conexión');
-    //   setMessageType('error');
-    // } finally {
-    //   setShowMessage(true);
-    //   setLoading(false);
-    // }
     setMessage('Login simulado (petición deshabilitada temporalmente)');
     setMessageType('info');
     localStorage.setItem('userAuthenticated', 'true');
