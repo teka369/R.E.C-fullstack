@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, useLocation, Navigate } from 'react-router-dom'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
@@ -9,7 +9,7 @@ import Footer from './views/main/components/Footer'
 // Páginas
 import App from './views/main/Principal'
 import Login from './views/main/Login'
-import Register from './views/main/Register'
+import LoginSecretaria from './views/main/LoginSecretaria'
 import ForgotPassword from './views/main/ForgotPassword'
 import { NotFound } from './views/main/NotPages'
 import MainContent from './views/main/Portafolio'
@@ -22,25 +22,49 @@ import Observaciones from './views/admin/BaseObservaciones'
 import Reportes from './views/main/BaseReportes'
 import Temarios from './views/admin/BaseTemarios'
 import { Contacto } from './views/main/Contacto'
+import RegistroEstudiantes from './views/admin/RegistroEstudiantes'
+import RegistroProfesores from './views/admin/RegistroProfesores'
+import AccesoDenegado from './views/main/AccesoDenegado'
+import Tutorial from './views/main/Tutorial'
 
+// Componente para proteger rutas
+const ProtectedRoute = ({ children, requiredRole }: { children: JSX.Element, requiredRole: string }) => {
+  const isAuthenticated = localStorage.getItem('userAuthenticated') === 'true';
+  const userRole = localStorage.getItem('userRole');
+
+  if (!isAuthenticated) {
+    return <Navigate to="/Principal" replace />;
+  }
+
+  if (requiredRole && userRole !== requiredRole) {
+    return <Navigate to="/acceso-denegado" replace />;
+  }
+
+  return children;
+};
 
 // Componente que controla el layout
 const AppLayout = () => {
   const location = useLocation();
-  const isAuthPage = location.pathname === '/' || location.pathname === '/register';
+  const userRole = localStorage.getItem('userRole');
+  const isAuthPage = ['/login', '/login-secretaria', '/forgot-password'].includes(location.pathname);
+  const isSecretaria = userRole === 'secretario';
 
   return (
     <>
-      {!isAuthPage && <Sidebar />}
+      {!isAuthPage && !isSecretaria && <Sidebar />}
       <Routes>
         {/* Rutas de Autenticación */}
-        <Route path='/' element={<Login />} />
-        <Route path='/register' element={<Register />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/login-secretaria' element={<LoginSecretaria />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
+        <Route path='/acceso-denegado' element={<AccesoDenegado />} />
         
         {/* Rutas Principales */}
+        <Route path='/' element={<Navigate to="/Principal" replace />} />
         <Route path='/Principal' element={<App />} />
         <Route path='/Portafolio' element={<MainContent />} />
+        <Route path='/tutorial' element={<Tutorial />} />
         
         {/* Rutas de Perfiles */}
         <Route path='/PerfilEstudiante' element={<PerfilEstudiante />} />
@@ -53,17 +77,32 @@ const AppLayout = () => {
         <Route path='/Certificados' element={<Certificados />} />
         
         {/* Rutas de Administración */}
+        <Route 
+          path='/registro-estudiantes' 
+          element={
+            <ProtectedRoute requiredRole="secretario">
+              <RegistroEstudiantes />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path='/registro-profesores' 
+          element={
+            <ProtectedRoute requiredRole="secretario">
+              <RegistroProfesores />
+            </ProtectedRoute>
+          } 
+        />
         
         {/* Rutas de Comunicación y Seguimiento */}
         <Route path='/Contacto' element={<Contacto/>}/>
-        
         <Route path='/Observaciones' element={<Observaciones />} />
         <Route path='/Reportes' element={<Reportes />} />
         
         {/* Ruta 404 */}
         <Route path='*' element={<NotFound />} />
       </Routes>
-      {!isAuthPage && <Footer />}
+      {!isAuthPage && !isSecretaria && <Footer />}
     </>
   );
 };

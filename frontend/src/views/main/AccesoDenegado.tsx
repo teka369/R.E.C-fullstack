@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/AccesoDenegado.css';
+import '../../assets/main/styles/AccesoDenegado.css';
 
 const AccesoDenegado: React.FC = () => {
   const navigate = useNavigate();

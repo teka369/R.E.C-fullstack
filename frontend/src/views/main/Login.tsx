@@ -1,116 +1,150 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-// import api from '../../services/Axios_Api'; // Eliminado
+import { Link, useNavigate } from 'react-router-dom';
+import { FaUser, FaLock, FaChalkboardTeacher, FaUserGraduate } from 'react-icons/fa';
 import '../../assets/main/styles/Login.css';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    rol: 'estudiante' // 'estudiante' o 'profesor'
+  });
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState({ title: '', message: '', type: '' });
 
-  // States for Login form
-  const [loginUsername, setLoginUsername] = useState('');
-  const [loginPassword, setLoginPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-
-  // State for response messages
-  const [message, setMessage] = useState('');
-  const [messageType, setMessageType] = useState<'success' | 'error' | 'info'>('info');
-  const [showMessage, setShowMessage] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  // Función para redireccionar según rol
-  const redirectBasedOnRole = (rol: string) => {
-    switch (rol) {
-      case 'admin':
-        navigate('/Principal');
-        break;
-      case 'profesor':
-        navigate('/PerfilProfesor');
-        break;
-      case 'estudiante':
-        navigate('/PerfilEstudiante');
-        break;
-    }
+  const showToast = (title: string, message: string, type: string) => {
+    setAlertMessage({ title, message, type });
+    setShowAlert(true);
+    setTimeout(() => setShowAlert(false), 3000);
   };
 
-  // Function to handle Login form submission
-  const handleLoginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setMessage('Login simulado (petición deshabilitada temporalmente)');
-    setMessageType('info');
-    localStorage.setItem('userAuthenticated', 'true');
-    setShowMessage(true);
-    setLoading(false);
-    setTimeout(() => redirectBasedOnRole('admin'), 1200);
+    
+    if (!formData.email || !formData.password) {
+      showToast('Error', 'Por favor complete todos los campos', 'danger');
+      return;
+    }
+
+    try {
+      // Simulamos un login exitoso sin validar el correo
+      localStorage.setItem('userAuthenticated', 'true');
+      localStorage.setItem('userName', formData.email.split('@')[0]);
+      localStorage.setItem('userRole', formData.rol);
+
+      if (formData.rol === 'profesor') {
+        navigate('/dashboard-profesor');
+      } else {
+        navigate('/dashboard-estudiante');
+      }
+      
+      showToast('Éxito', 'Inicio de sesión exitoso', 'success');
+    } catch (error) {
+      showToast('Error', 'Error al iniciar sesión', 'danger');
+    }
   };
 
   return (
     <div className="auth-container">
       <div className="login-container">
-        {/* Message display */}
-        {showMessage && (
-          <div className={`login-message ${messageType}`}>
-            <i className={`bi ${
-              messageType === 'success' ? 'bi-check-circle-fill' : 
-              messageType === 'error' ? 'bi-exclamation-triangle-fill' : 
-              'bi-info-circle-fill'
-            }`}></i>
-            {message}
+        {showAlert && (
+          <div className={`login-message ${alertMessage.type}`} role="alert">
+            <strong>{alertMessage.title}</strong> {alertMessage.message}
+            <button type="button" className="btn-close" onClick={() => setShowAlert(false)}></button>
           </div>
         )}
 
         <div className="login-wrapper">
           <div className="login-left-side">
-            <h1>Iniciar Sesión</h1>
-            <p className="login-subtitle">
-              Accede a tu cuenta para gestionar todo lo relacionado con el sistema educativo
-            </p>
+            <h1>Bienvenido</h1>
+            <p className="login-subtitle">Sistema de Gestión Educativa</p>
             <div className="login-image-container">
-              <img src="/image.png" alt="Visual de inicio de sesión" className="login-image" />
+              <img src="/logo.png" alt="Logo" className="login-image" />
             </div>
             <p className="login-helper-text">
-              ¿No tienes cuenta? <Link to="/register" className="login-link">Crear Cuenta</Link>
+              ¿Necesitas ayuda? <Link to="/contacto" className="login-link">Contáctanos</Link>
             </p>
           </div>
+
           <div className="login-right-side">
             <div className="login-form-card">
-              <h2>Información de Usuario</h2>
-              <form onSubmit={handleLoginSubmit}>
+              <h2>Iniciar Sesión</h2>
+              <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                  <label>Correo Electrónico</label>
-                  <div className="input-with-icon">
-                    <input
-                      type="text"
-                      placeholder="Correo electrónico"
-                      value={loginUsername}
-                      onChange={(e) => setLoginUsername(e.target.value)}
-                      required
-                    />
-                    <span className="input-icon">
-                      <i className="bi bi-person"></i>
-                    </span>
+                  <label className="form-label">
+                    <FaUser className="me-2" />
+                    Correo Institucional
+                  </label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    value={formData.email}
+                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    placeholder="ejemplo@iejavieralondonobarriosevilla.edu.co"
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label">
+                    <FaLock className="me-2" />
+                    Contraseña
+                  </label>
+                  <input
+                    type="password"
+                    className="form-control"
+                    value={formData.password}
+                    onChange={(e) => setFormData({...formData, password: e.target.value})}
+                    placeholder="Ingrese su contraseña"
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label">Seleccione su rol</label>
+                  <div className="rol-selector">
+                    <div 
+                      className={`rol-option ${formData.rol === 'estudiante' ? 'selected' : ''}`}
+                      onClick={() => setFormData({...formData, rol: 'estudiante'})}
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        id="estudiante"
+                        name="rol"
+                        value="estudiante"
+                        checked={formData.rol === 'estudiante'}
+                        onChange={() => {}}
+                      />
+                      <div className="rol-content">
+                        <FaUserGraduate className="rol-icon" />
+                        <span>Estudiante</span>
+                      </div>
+                    </div>
+                    <div 
+                      className={`rol-option ${formData.rol === 'profesor' ? 'selected' : ''}`}
+                      onClick={() => setFormData({...formData, rol: 'profesor'})}
+                    >
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        id="profesor"
+                        name="rol"
+                        value="profesor"
+                        checked={formData.rol === 'profesor'}
+                        onChange={() => {}}
+                      />
+                      <div className="rol-content">
+                        <FaChalkboardTeacher className="rol-icon" />
+                        <span>Profesor</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="form-group">
-                  <label>Contraseña</label>
-                  <div className="input-with-icon">
-                    <input
-                      type={showPassword ? "text" : "password"}
-                      placeholder="••••••••••••••"
-                      value={loginPassword}
-                      onChange={(e) => setLoginPassword(e.target.value)}
-                      required
-                    />
-                    <span className="input-icon" onClick={() => setShowPassword(!showPassword)}>
-                      <i className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"}`}></i>
-                    </span>
-                  </div>
-                </div>
-                <div className="forgot-password">
-                  <Link to="/forgot-password">¿Olvidaste tu Contraseña?</Link>
-                </div>
-                <button type="submit" className="login-button" disabled={loading}>
-                  {loading ? 'Procesando...' : 'Iniciar Sesión'}
+
+                <button type="submit" className="login-button">
+                  Iniciar Sesión
                 </button>
               </form>
             </div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../../../assets/main/styles/Sidebar.css';
+import { Link } from 'react-router-dom';
 
 const Sidebar: React.FC = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -12,9 +13,13 @@ const Sidebar: React.FC = () => {
   useEffect(() => {
     const userAuth = localStorage.getItem('userAuthenticated');
     const userName = localStorage.getItem('userName');
+    const userRole = localStorage.getItem('userRole');
     setIsAuthenticated(userAuth === 'true');
     if (userName) {
       setUserInitial(userName.charAt(0).toUpperCase());
+    }
+    if (userRole) {
+      localStorage.setItem('userRole', userRole);
     }
   }, []);
 
@@ -45,6 +50,7 @@ const Sidebar: React.FC = () => {
     e.preventDefault();
     localStorage.removeItem('userAuthenticated');
     localStorage.removeItem('userName');
+    localStorage.removeItem('userRole');
     setIsAuthenticated(false);
     setUserInitial('');
     window.location.href = '/';
@@ -138,12 +144,7 @@ const Sidebar: React.FC = () => {
           {/* Botones de Registro/Login para barra horizontal - Solo visibles si NO está autenticado */}
           {!isAuthenticated ? (
             <div className="auth-buttons">
-              <a href="/" className="auth-btn login-btn">
-                <i className="bi bi-box-arrow-in-right me-1"></i>Iniciar
-              </a>
-              <a href="/" className="auth-btn register-btn">
-                <i className="bi bi-person-plus me-1"></i>Registrarse
-              </a>
+             
             </div>
           ) : (
             // Perfil de usuario - Solo visible si está autenticado
@@ -188,67 +189,39 @@ const Sidebar: React.FC = () => {
         <div className="sidebar-content">
           {/* Encabezado */}
           <div className="sidebar-header">
-            <a href="Principal" className="sidebar-logo">
-              <img src="/image.png" alt="Logo" className="logo-img" />
-              <span className="logo-text">R.E.C</span>
-            </a>
-            <button id="closeMenu" className="close-btn" onClick={closeNavbar}>
+            <div className="user-info">
+              <div className="user-avatar">
+                {userInitial}
+              </div>
+              <div className="user-details">
+                <span className="user-name">{localStorage.getItem('userName')}</span>
+                <span className="user-role">{localStorage.getItem('userRole')}</span>
+              </div>
+            </div>
+            <button className="close-btn" onClick={closeNavbar}>
               <i className="bi bi-x-lg"></i>
             </button>
           </div>
 
-          {/* Perfil de Usuario - Solo visible si está autenticado */}
-          {isAuthenticated && (
-            <div className="sidebar-profile">
-              <div className="dropdown">
-                <button className="dropdown-toggle profile-btn" type="button">
-                  <img 
-                    src="/default-avatar.png" 
-                    alt="Perfil" 
-                    className="profile-img" 
-                  />
-                  <div className="profile-info">
-                    <p className="profile-name">Usuario</p>
-                    <p className="profile-role">Estudiante</p>
-                  </div>
-                </button>
-                <ul className="dropdown-menu">
-                  <li>
-                    <a className="dropdown-item" href="/PerfilEstudiante">
-                      <i className="bi bi-person me-2"></i>Perfil
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="/Configuracion">
-                      <i className="bi bi-gear me-2"></i>Configuración
-                    </a>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  <li>
-                    <a 
-                      className="dropdown-item text-danger" 
-                      href="/" 
-                      onClick={handleLogout}
-                    >
-                      <i className="bi bi-box-arrow-right me-2"></i>Cerrar Sesión
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          )}
-
-          {/* Menú Principal - Contenido según autenticación */}
-          <div className="sidebar-menu">
-            <ul className="menu-list">
+          <nav className="sidebar-nav">
+            <ul>
               <li>
-                <a href="Principal" className="menu-item">
-                  <i className="bi bi-house-door me-3"></i>Inicio
-                </a>
+                <Link to="/Principal" onClick={closeNavbar}>
+                  <i className="bi bi-house-door"></i>
+                  <span>Inicio</span>
+                </Link>
               </li>
-              
+
+              {/* Mostrar enlace de registro de estudiantes solo para secretarios */}
+              {localStorage.getItem('userRole') === 'secretario' && (
+                <li>
+                  <Link to="/registro-estudiantes" onClick={closeNavbar}>
+                    <i className="bi bi-person-plus"></i>
+                    <span>Registro de Estudiantes</span>
+                  </Link>
+                </li>
+              )}
+
               {/* Opciones visibles solo si está autenticado */}
               {isAuthenticated && (
                 <>
@@ -332,6 +305,13 @@ const Sidebar: React.FC = () => {
                 </a>
               </div>
             )}
+          </nav>
+
+          <div className="sidebar-footer">
+            <button onClick={handleLogout} className="logout-btn">
+              <i className="bi bi-box-arrow-right"></i>
+              <span>Cerrar Sesión</span>
+            </button>
           </div>
         </div>
       </nav>
