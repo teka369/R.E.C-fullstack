@@ -34,9 +34,9 @@ const Login: React.FC = () => {
       localStorage.setItem('userRole', formData.rol);
 
       if (formData.rol === 'profesor') {
-        navigate('/dashboard-profesor');
+        navigate('/Perfilprofesor');
       } else {
-        navigate('/dashboard-estudiante');
+        navigate('/Perfilestudiante');
       }
       
       showToast('Éxito', 'Inicio de sesión exitoso', 'success');
